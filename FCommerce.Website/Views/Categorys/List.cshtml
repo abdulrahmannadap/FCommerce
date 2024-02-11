@@ -1,0 +1,31 @@
+﻿@model IEnumerable<Category>
+
+    <Table class="table table-hover table-bordered ">
+        <thead>
+            <tr>
+                <th>Id </th>
+                <th>Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var categoryInModel in Model)
+            {
+                <tr>
+                <td>
+                    @categoryInModel.Id
+                </td>
+                    
+                <td>
+                    @categoryInModel.Name
+                </td>
+                <td>
+                    <a class="btn btn-info " asp-controller="Categorys" asp-action="Edit" asp-for-id="@categoryInModel.Id">Edit</a>
+                    <a class="btn btn-info " asp-controller="Categorys" asp-action="Edit" asp-for-id="@categoryInModel.Id" >Delete</a>
+                </td>
+                </tr>
+                
+
+            }
+        </tbody>
+    </Table>
