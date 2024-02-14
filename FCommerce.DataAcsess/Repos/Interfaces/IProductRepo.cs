@@ -2,7 +2,7 @@
 
 namespace FCommerce.DataAcsess.Repos.Interfaces
 {
-    public interface ICategoryRepo : IRepositoy<Category>
+    public interface IProductRepo : IRepositoy<Product>
     {
         void Delete(int id);
         void Save();
