@@ -6,5 +6,9 @@ namespace FCommerce.DataAcsess.Repos.Interfaces
     {
         void Delete(int id);
         void Save();
+        IEnumerable<Category> GetCategories();
+        IEnumerable<Product> GetAllPro();
+        
+
     }
 }

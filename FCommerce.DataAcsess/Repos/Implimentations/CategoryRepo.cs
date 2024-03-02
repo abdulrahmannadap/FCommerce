@@ -17,6 +17,8 @@ namespace FCommerce.DataAcsess.Repos.Implimentations
             categoryToBeeDeleted.IsActive = false;
         }
 
+        
+
         public void Save()
         {
             _context.SaveChanges();

@@ -36,12 +36,16 @@ namespace FCommerce.Website.Controllers
                 if(category.Id == null || category.Id == 0)
                 {
                     _categoryRepo.Add(category);
+                    TempData["Sucsess"] = "Category Add Sucsessfully";
+                    _categoryRepo.Save();
                 }
                 else
                 {
                     _categoryRepo.Edit(category);
+                    TempData["Sucsess"] = "Category Edit Sucsessfully";
+                    _categoryRepo.Save();
                 }
-                _categoryRepo.Save();
+              
                 return RedirectToAction("List", "Categorys");
             }
             return BadRequest("Fir Se Galat Code Bhai To Chod De Coding ");
@@ -57,6 +61,7 @@ namespace FCommerce.Website.Controllers
         public IActionResult DeleteConferm(int id)
         { 
             _categoryRepo.Delete(id);
+            TempData["Sucsess"] = "Category Deleted Sucsessfully";
             _categoryRepo.Save();
             return RedirectToAction("List","Categorys");
         }

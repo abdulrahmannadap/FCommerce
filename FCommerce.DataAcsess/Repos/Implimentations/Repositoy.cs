@@ -1,4 +1,5 @@
 ﻿using FCommerce.DataAcsess.Repos.Interfaces;
+using FCommerce.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace FCommerce.DataAcsess.Repos.Implimentations
@@ -38,6 +39,7 @@ namespace FCommerce.DataAcsess.Repos.Implimentations
         {
             return _dbSet.SingleOrDefault(filter);
         }
+
 
         public IEnumerable<T> GetAll()
         {
