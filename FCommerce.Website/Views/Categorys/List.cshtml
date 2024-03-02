@@ -1,11 +1,11 @@
 ﻿@model IEnumerable<Category>
 
-    <Table class="table table-hover table-bordered ">
+    <Table class="table table-hover table-bordered bg-warning ">
         <thead>
             <tr>
-                <th>Id </th>
-                <th>Name</th>
-                <th>Actions</th>
+                 <th class="text-uppercase">Id </th>
+                 <th class="text-uppercase">Name</th>
+                 <th class="text-uppercase">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -20,8 +20,8 @@
                     @categoryInModel.Name
                 </td>
                 <td>
-                    <a class="btn btn-info " asp-controller="Categorys" asp-action="Edit" asp-for-id="@categoryInModel.Id">Edit</a>
-                    <a class="btn btn-info " asp-controller="Categorys" asp-action="Edit" asp-for-id="@categoryInModel.Id" >Delete</a>
+                    <a class="btn btn-info " asp-controller="Categorys" asp-action="Upsert" asp-route-id="@categoryInModel.Id">Edit</a>
+                    <a class="btn btn-danger " asp-controller="Categorys" asp-action="Delete" asp-route-id="@categoryInModel.Id">Delete</a>
                 </td>
                 </tr>
                 

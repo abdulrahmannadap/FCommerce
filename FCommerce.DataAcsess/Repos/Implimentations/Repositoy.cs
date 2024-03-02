@@ -36,7 +36,7 @@ namespace FCommerce.DataAcsess.Repos.Implimentations
 
         public T Get(System.Linq.Expressions.Expression<Func<T, bool>> filter)
         {
-            return _dbSet.FirstOrDefault(filter);
+            return _dbSet.SingleOrDefault(filter);
         }
 
         public IEnumerable<T> GetAll()

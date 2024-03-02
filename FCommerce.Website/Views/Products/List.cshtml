@@ -1,0 +1,28 @@
+﻿@model IEnumerable<Product>
+<table>
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Product Name</th>
+            <th>Product Description</th>
+            <th>Product Price</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(Product product in Model)
+        {
+            <tr>
+                <td>@product.Id</td>
+                <td>@product.ProductName</td>
+                <td>@product.Description</td>
+                <td>@product.ProductPrice</td>
+                <td>
+                    <a asp-controller="Products" asp-action="Upsert" class="btn btn-warning" asp-route="@product.Id">Edit</a>
+                    <a asp-controller="Products" asp-action="Delete" class="btn btn-warning" asp-route="@product.Id">Delete</a>
+                </td>
+            </tr>
+            
+        }
+    </tbody>
+</table>
