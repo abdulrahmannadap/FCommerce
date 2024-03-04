@@ -1,14 +1,26 @@
 ﻿@model IEnumerable<Product>
-<br />
+
+<div >
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await Component.InvokeAsync("Notyf")
+</div>
+@* @if (TempData["Sucsess"] != null)
+{
+    <div class="alert alert-success">
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+        <script>
+            toastr.succes('@TempData["Sucsess"]');
+        </script>
+    </div>
+} *@
+
     <div class ="mb-3">
     <a asp-controller="Products" asp-action="Upsert" class="btn btn-primary text-uppercase"><i class="bi bi-plus-lg"></i> Add More</a>
     </div>
-@if (TempData["Sucsess"] != null)
-{
-    <div class="alert alert-success">
-        <strong>Success !</strong> @TempData["Sucsess"]
-    </div>
-}
+
 <table class="table table-hover table-bordered bg-warning ">
     <thead>
         <tr>
@@ -31,10 +43,17 @@
                 <td>@product.Category.Name</td>
                 <td>
                     <a asp-controller="Products" asp-action="Upsert" class="btn btn-warning text-uppercase" asp-route-id="@product.Id"><i class="bi bi-pencil-square"></i> Edit</a>
-                    <a asp-controller="Products" asp-action="Delete" class="btn btn-danger text-uppercase" asp-route-id="@product.Id"><i class="bi bi-x-octagon"></i> Delete</a>
+                    <a class="btn btn-danger text-uppercase" asp-controller="Categorys" asp-action="Delete" asp-route-id="@product.Id" onclick="return confirmDelete()"><i class="bi bi-x-octagon"></i> Delete</a>
                 </td>
             </tr>
             
         }
     </tbody>
 </table>
+@section Scripts {
+    <script>
+        function confirmDelete() {
+            return confirm("Are You Want To Delete This ?")
+        }
+    </script>
+}

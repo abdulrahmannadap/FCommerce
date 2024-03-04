@@ -1,6 +1,9 @@
+using AspNetCoreHero.ToastNotification;
+using AspNetCoreHero.ToastNotification.Extensions;
 using FCommerce.DataAcsess;
 using FCommerce.DataAcsess.Repos.Implimentations;
 using FCommerce.DataAcsess.Repos.Interfaces;
+using FCommerce.DataAcsess.Repos.UOWs;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,8 +15,10 @@ builder.Services.AddDbContext<ApplicationDbContext>(option =>
 {
     option.UseSqlServer(builder.Configuration.GetConnectionString("DbConnection"));
 });
-builder.Services.AddScoped<ICategoryRepo, CategoryRepo>();
-builder.Services.AddScoped<IProductRepo, ProductRepo>();
+builder.Services.AddNotyf(config => { config.DurationInSeconds = 10; config.IsDismissable = true; config.Position = NotyfPosition.BottomRight; });
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+//builder.Services.AddScoped<ICategoryRepo, CategoryRepo>();
+//builder.Services.AddScoped<IProductRepo, ProductRepo>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -30,6 +35,7 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+app.UseNotyf();
 
 app.MapControllerRoute(
     name: "default",

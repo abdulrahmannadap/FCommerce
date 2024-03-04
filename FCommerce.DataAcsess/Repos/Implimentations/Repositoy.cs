@@ -19,11 +19,17 @@ namespace FCommerce.DataAcsess.Repos.Implimentations
             _dbSet.Add(entity);
         }
 
+        public void DeleteNormal(T entity)
+        {
+            _dbSet.Remove(entity);
+             
+        }
 
         public void DeleteRange(IEnumerable<T> entities)
         {
             _dbSet.RemoveRange(entities);
         }
+
 
         public void Edit(T entity)
         {

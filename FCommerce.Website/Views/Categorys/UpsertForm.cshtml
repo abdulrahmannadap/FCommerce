@@ -1,18 +1,13 @@
 ﻿@model Category
 
 
-@* @if (TempData["Sucsess"] != null)
-{
-    <div class="alert alert-success">
-        <strong>Success !</strong> @TempData["Sucsess"]
-    </div>
-} *@
 
 
 <div class="m-2">
     <a asp-action="List" asp-controller="categorys" class="btn btn-primary text-uppercase "><i class="bi bi-list-ol"></i> Go To list</a>
 </div>
 <form asp-controller="Categorys" asp-action="Upsert" method="post" class="text-center mt-5">
+   
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div>
           <label class="form-label">Category Name</label>
@@ -21,10 +16,12 @@
 
     </div>
         <small class="form-text text-muted">Please choose a unique item name.</small>
-          <div>
-        <input type="submit" value="Submit" class="btn btn-success mt-3 text-uppercase"  />
+          <div class="text-center">
+        <input type="submit" class="btn btn-success mt-3 text-uppercase mx-4 " value="Submit" />
+        <a asp-controller="Categorys" asp-action="List" class="btn btn-warning mt-3 text-uppercase">Cancelled</a>
+
           </div>
-</form>
+</form> 
 
 @section Scripts {
     @{

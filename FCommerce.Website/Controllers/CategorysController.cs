@@ -1,5 +1,5 @@
-﻿using FCommerce.DataAcsess;
-using FCommerce.DataAcsess.Repos.Interfaces;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using FCommerce.DataAcsess.Repos.UOWs;
 using FCommerce.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,64 +7,79 @@ namespace FCommerce.Website.Controllers
 {
     public class CategorysController : Controller
     {
-        private readonly ICategoryRepo _categoryRepo;
-        public CategorysController(ICategoryRepo categoryRepo)
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly INotyfService _notyfService;
+        public CategorysController(IUnitOfWork unitOfWork, INotyfService notyfService)
         {
-            _categoryRepo = categoryRepo;
+            _unitOfWork = unitOfWork;
+            _notyfService = notyfService;
         }
         public IActionResult List()
         {
-            var categoryInDb = _categoryRepo.GetAll().Where(c => c.IsActive==true);
+
+            var categoryInDb = _unitOfWork.CategoryRepo.GetAll();
             return View(categoryInDb);
         }
 
         public IActionResult Upsert(int? id)
         {
             if (id == null || id == 0)
-            { 
-            return View("UpsertForm");
+            {
+                return View("UpsertForm");
             }
-            var editDataInDb = _categoryRepo.Get(c => c.Id==id);
-            
-            return View("UpsertForm",editDataInDb);
+            var editDataInDb = _unitOfWork.CategoryRepo.Get(c => c.Id == id);
+
+            return View("UpsertForm", editDataInDb);
         }
         [HttpPost]
         public IActionResult Upsert(Category category)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                if(category.Id == null || category.Id == 0)
+                if (category.Id == null || category.Id == 0)
                 {
-                    _categoryRepo.Add(category);
-                    TempData["Sucsess"] = "Category Add Sucsessfully";
-                    _categoryRepo.Save();
+                    _unitOfWork.CategoryRepo.Add(category);
+                    _unitOfWork.Save();
+                    _notyfService.Success("You have successfully Add the data.");
+
                 }
                 else
                 {
-                    _categoryRepo.Edit(category);
-                    TempData["Sucsess"] = "Category Edit Sucsessfully";
-                    _categoryRepo.Save();
+                    _unitOfWork.CategoryRepo.Edit(category);
+                    _unitOfWork.Save();
+                    _notyfService.Success("You have successfully Edit the data.");
+
                 }
-              
+
                 return RedirectToAction("List", "Categorys");
             }
-            return BadRequest("Fir Se Galat Code Bhai To Chod De Coding ");
+            return NotFound();
         }
 
         public IActionResult Delete(int id)
         {
-            var DeleteIdInDb = _categoryRepo.Get(id);
+            if (id == 0)
+            {
+                return NotFound();
+            }
+            else
+            {
+                var DeleteIdInDb = _unitOfWork.CategoryRepo.Get(id);
+                _unitOfWork.CategoryRepo.DeleteNormal(DeleteIdInDb);
+                _unitOfWork.Save();
+                _notyfService.Error("Category To Bee Deleted...");
+            }
+            return RedirectToAction("List");
+        }
 
-            return View(DeleteIdInDb);
-        }
-        [HttpPost]
-        public IActionResult DeleteConferm(int id)
-        { 
-            _categoryRepo.Delete(id);
-            TempData["Sucsess"] = "Category Deleted Sucsessfully";
-            _categoryRepo.Save();
-            return RedirectToAction("List","Categorys");
-        }
+        //[HttpPost]
+        //public IActionResult DeleteConferm(int id)
+        //{ 
+        //    _categoryRepo.Delete(id);
+        //    TempData["Sucsess"] = "Category Deleted Sucsessfully";
+        //    _categoryRepo.Save();
+        //    return RedirectToAction("List","Categorys");
+        //}
 
     }
 }

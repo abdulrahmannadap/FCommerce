@@ -1,4 +1,6 @@
-﻿using FCommerce.DataAcsess.Repos.Interfaces;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using FCommerce.DataAcsess.Repos.Interfaces;
+using FCommerce.DataAcsess.Repos.UOWs;
 using FCommerce.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -7,23 +9,24 @@ namespace FCommerce.Website.Controllers
 {
     public class ProductsController : Controller
     {
-        private readonly IProductRepo _productRepo;
-        private readonly ICategoryRepo _categoryRepo;
+       private readonly IUnitOfWork _unitOfWork;
+        private readonly INotyfService _notyfService;
 
-        public ProductsController(IProductRepo productRepo,ICategoryRepo categoryRepo)
+        public ProductsController(IUnitOfWork unitOfWork, INotyfService notyfService)
         {
-            _categoryRepo = categoryRepo;
-            _productRepo = productRepo;
-            
+            _unitOfWork = unitOfWork;
+            _notyfService = notyfService;
+
+
         }
         public IActionResult List()
         {
-            var productInDb = _productRepo.GetAllPro().Where(p => p.IsActive == true);
+            var productInDb = _unitOfWork.ProductRepo.GetAllPro();
             return View(productInDb);
         }
         public IActionResult Upsert(int? id)
         {
-            var categoryList = _categoryRepo.GetAll().ToList();
+            var categoryList = _unitOfWork.CategoryRepo.GetAll().ToList();
            // var categorylistobj = _productRepo.GetCategories();
 
             ViewBag.CategoryItem = categoryList.Select(c => new SelectListItem { Text = c.Name, Value = c.Id.ToString() });
@@ -33,7 +36,7 @@ namespace FCommerce.Website.Controllers
 
                 return View("UpsertForm");
             }
-            var editDataInDb = _productRepo.Get(c => c.Id == id);
+            var editDataInDb = _unitOfWork.ProductRepo.Get(c => c.Id == id);
 
             return View("UpsertForm", editDataInDb);
         }
@@ -44,15 +47,15 @@ namespace FCommerce.Website.Controllers
             {
                 if (product.Id == null || product.Id == 0)
                 {
-                    _productRepo.Add(product);
-                    _productRepo.Save();
-                    TempData["Sucsess"] = "Product Add Sucsessfully";
+                    _unitOfWork.ProductRepo.Add(product);
+                    _unitOfWork.Save();
+                    _notyfService.Success("You have successfully Add the data.");
                 }
                 else
                 {
-                    _productRepo.Edit(product);
-                    _productRepo.Save();
-                    TempData["Sucsess"] = "Product Edit Sucsessfully";
+                    _unitOfWork.ProductRepo.Edit(product);
+                    _unitOfWork.Save();
+                    _notyfService.Success("You have successfully Edit the data.");
 
                 }
 
@@ -64,26 +67,30 @@ namespace FCommerce.Website.Controllers
 
         public IActionResult Delete(int id)
         {
-            if (id == null)
-                return BadRequest();
-
-            var categoryListss = _categoryRepo.Get(id);
-            ViewBag.CategoryListData = categoryListss.Name;
-            var DeleteIdInDb = _productRepo.Get(id);
-
-            return View(DeleteIdInDb);
+            if(id == 0)
+            {
+                return NotFound();
+            }
+            else
+            {
+                var deleteIdInDbs = _unitOfWork.ProductRepo.Get(id);
+                _unitOfWork.ProductRepo.DeleteNormal(deleteIdInDbs);
+                _unitOfWork.Save();
+                _notyfService.Error("Product To Bee Deleted...");
+            }
+            return RedirectToAction("List");
         }
-        [HttpPost]
-        public IActionResult DeleteConferm(int id)
-        {
-            if(id==null)
-                return BadRequest();
+        //[HttpPost]
+        //public IActionResult DeleteConferm(int id)
+        //{
+        //    if(id==null)
+        //        return BadRequest();
 
-            _productRepo.Delete(id);
-            TempData["Sucsess"] = "Product Edit Sucsessfully";
+        //    _productRepo.DeleteNormal(id);
+        //    TempData["Sucsess"] = "Product Edit Sucsessfully";
 
-            _productRepo.Save();
-            return RedirectToAction("List", "Products");
-        }
+        //    _productRepo.Save();
+        //    return RedirectToAction("List", "Products");
+        //}
     }
 }

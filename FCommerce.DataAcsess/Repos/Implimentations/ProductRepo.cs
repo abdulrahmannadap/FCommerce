@@ -13,11 +13,11 @@ namespace FCommerce.DataAcsess.Repos.Implimentations
             _context = context;
         }
 
-        public void Delete(int id)
-        {
-            var productInDb = _context.Products.Find(id);
-            productInDb.IsActive = false;
-        }
+        //public void Delete(int id)
+        //{
+        //    var productInDb = _context.Products.Find(id);
+        //    productInDb.IsActive = false;
+        //}
 
         public void Save()
         {
