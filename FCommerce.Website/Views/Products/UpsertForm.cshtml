@@ -4,7 +4,8 @@
     <a asp-action="List" asp-controller="Products" class="btn btn-primary text-uppercase "><i class="bi bi-list-ol"></i> Go To list</a>
   </div>
 
-<form asp-controller="Products" asp-action="Upsert" method="post" class="text-center">
+ 
+<form asp-controller="Products" asp-action="Upsert" method="post" class="text-center" enctype="multipart/form-data">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
     
@@ -28,10 +29,10 @@
  
     <div class="row mt-2 ">
          <div class="col-6">
-             <label class="form-label fw-bold">Uplode Your File</label>
+             <label class="form-label fw-bold ">Uplode Your File</label>
          </div>
           <div class="col-6">
-             <input type="file" class="form-control"> 
+             <input type="file" class="form-control" name="file"> 
          </div>
     </div>
 

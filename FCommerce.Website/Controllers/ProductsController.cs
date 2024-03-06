@@ -11,13 +11,16 @@ namespace FCommerce.Website.Controllers
         #region Dependanceis
         private readonly IUnitOfWork _unitOfWork;
         private readonly INotyfService _notyfService;
+        private readonly IWebHostEnvironment _webHostEnvironment;
+       
         #endregion
 
         #region Product Custructor
-        public ProductsController(IUnitOfWork unitOfWork, INotyfService notyfService)
+        public ProductsController(IUnitOfWork unitOfWork, INotyfService notyfService, IWebHostEnvironment webHostEnvironment)
         {
             _unitOfWork = unitOfWork;
             _notyfService = notyfService;
+            _webHostEnvironment = webHostEnvironment;
         }
         #endregion
 
@@ -50,10 +53,34 @@ namespace FCommerce.Website.Controllers
 
         #region Product Upsert Post
         [HttpPost]
-        public IActionResult Upsert(Product product)
+        public IActionResult Upsert(Product product,IFormFile file)
         {
+
             if (ModelState.IsValid)
             {
+                if(file != null)
+                {
+                    //string fileExtensionName = Path.GetExtension(file.FileName);
+                    string newFileName = "Image"+Guid.NewGuid().ToString().Substring(0,5)+Path.GetExtension(file.FileName);
+                    string webRootpath = _webHostEnvironment.WebRootPath;
+                    //string finalDestination = webRootpath + @"\images\products";
+                    string finalDestination = Path.Combine(webRootpath,@"images\products");
+                   //Using Block Background Call Dispos Method
+                    using (FileStream fileStream = new FileStream(Path.Combine(finalDestination,newFileName),FileMode.Create))
+                    {
+                        file.CopyTo(fileStream);
+                    }
+
+                    //Reletive path
+                    product.ImageUrl = @"\images\products" + newFileName;
+                }
+
+
+
+
+
+
+
                 if (product.Id == null || product.Id == 0)
                 {
                     _unitOfWork.ProductRepo.Add(product);

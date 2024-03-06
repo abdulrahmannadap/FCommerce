@@ -20,4 +20,8 @@
     <ProjectReference Include="..\FCommerce.Models\FCommerce.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\images\products\" />
+  </ItemGroup>
+
 </Project>
