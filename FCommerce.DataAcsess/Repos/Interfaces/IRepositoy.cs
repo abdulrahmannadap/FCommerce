@@ -6,8 +6,10 @@ namespace FCommerce.DataAcsess.Repos.Interfaces
     {
         void Add(T entity);
         void Edit(T entity);
+        void DeleteNormal(T entity);
         void DeleteRange(IEnumerable<T> entities);
         T Get(int id);
+       
         T Get(Expression<Func<T, bool>> filter);
         IEnumerable<T> GetAll();
 

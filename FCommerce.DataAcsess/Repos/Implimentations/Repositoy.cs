@@ -1,4 +1,5 @@
 ﻿using FCommerce.DataAcsess.Repos.Interfaces;
+using FCommerce.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace FCommerce.DataAcsess.Repos.Implimentations
@@ -18,11 +19,17 @@ namespace FCommerce.DataAcsess.Repos.Implimentations
             _dbSet.Add(entity);
         }
 
+        public void DeleteNormal(T entity)
+        {
+            _dbSet.Remove(entity);
+             
+        }
 
         public void DeleteRange(IEnumerable<T> entities)
         {
             _dbSet.RemoveRange(entities);
         }
+
 
         public void Edit(T entity)
         {
@@ -38,6 +45,7 @@ namespace FCommerce.DataAcsess.Repos.Implimentations
         {
             return _dbSet.SingleOrDefault(filter);
         }
+
 
         public IEnumerable<T> GetAll()
         {

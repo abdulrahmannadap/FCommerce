@@ -11,11 +11,13 @@ namespace FCommerce.DataAcsess.Repos.Implimentations
         {
            _context = context;
         }
-        public void Delete(int id)
-        {
-            var categoryToBeeDeleted = _context.Categories.Find(id);
-            categoryToBeeDeleted.IsActive = false;
-        }
+        ////public void Delete(int id)
+        ////{
+        ////    var categoryToBeeDeleted = _context.Categories.Find(id);
+        ////    categoryToBeeDeleted.IsActive = false;
+        //}
+
+        
 
         public void Save()
         {

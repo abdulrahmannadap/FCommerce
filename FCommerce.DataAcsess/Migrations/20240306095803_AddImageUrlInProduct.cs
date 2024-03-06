@@ -5,25 +5,24 @@
 namespace FCommerce.DataAcsess.Migrations
 {
     /// <inheritdoc />
-    public partial class AddColumeIsActiveInCategory : Migration
+    public partial class AddImageUrlInProduct : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<bool>(
-                name: "IsActive",
-                table: "Categories",
-                type: "bit",
-                nullable: false,
-                defaultValue: false);
+            migrationBuilder.AddColumn<string>(
+                name: "ImageUrl",
+                table: "Products",
+                type: "nvarchar(max)",
+                nullable: true);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "IsActive",
-                table: "Categories");
+                name: "ImageUrl",
+                table: "Products");
         }
     }
 }
