@@ -53,7 +53,7 @@ namespace FCommerce.Website.Controllers
 
         #region Product Upsert Post
         [HttpPost]
-        public IActionResult Upsert(Product product,IFormFile file)
+        public IActionResult Upsert(Product product,IFormFile? file)
         {
 
             if (ModelState.IsValid)
