@@ -7,7 +7,7 @@
     <a asp-action="List" asp-controller="Products" class="btn btn-primary text-uppercase "><i class="bi bi-list-ol"></i> Go To list</a>
   </div>
 
-<form asp-controller="Products" asp-action="Upsert" method="post" class="text-center  col-md-5">
+<form asp-controller="Products" asp-action="Upsert" method="post" class="text-center  0">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
 
@@ -25,7 +25,7 @@
     </div>
     <div>
     <label class="col-form-label">Product Price</label>
-        <input type="text" asp-for="ProductPrice" placeholder="Enter Product name" class="form-control">
+        <input type="number" asp-for="ProductPrice" placeholder="Enter Product name" class="form-control">
         <span asp-validation-for="ProductPrice" class="text text-danger"></span>
 
     </div>
