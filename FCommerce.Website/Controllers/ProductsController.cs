@@ -63,6 +63,18 @@ namespace FCommerce.Website.Controllers
                     //string fileExtensionName = Path.GetExtension(file.FileName);
                     string newFileName = "Image"+Guid.NewGuid().ToString().Substring(0,5)+Path.GetExtension(file.FileName);
                     string webRootpath = _webHostEnvironment.WebRootPath;
+
+                    // Edit method Of File Update
+                    if(!string.IsNullOrEmpty(product.ImageUrl))
+                    {
+                        var oldImagePath = Path.Combine(webRootpath, product.ImageUrl.TrimStart('\\'));
+                        if(System.IO.File.Exists(oldImagePath))
+                        {
+                            System.IO.File.Delete(oldImagePath);    
+                        }
+                    }
+
+
                     //string finalDestination = webRootpath + @"\images\products";
                     string finalDestination = Path.Combine(webRootpath,@"images\products");
                    //Using Block Background Call Dispos Method

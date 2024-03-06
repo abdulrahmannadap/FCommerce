@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FCommerce.DataAcsess.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240304122601_InitialCreate")]
+    [Migration("20240306144830_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -54,6 +54,9 @@ namespace FCommerce.DataAcsess.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ProductName")
