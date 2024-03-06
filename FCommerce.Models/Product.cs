@@ -14,7 +14,9 @@ namespace FCommerce.Models
         public string Description { get; set; }
         [Required]
         public double ProductPrice { get; set; }
-       
+        [ValidateNever]
+        public string? ImageUrl { get; set; }
+
 
         [ValidateNever]
         [Required]

@@ -1,5 +1,4 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
-using FCommerce.DataAcsess.Repos.Interfaces;
 using FCommerce.DataAcsess.Repos.UOWs;
 using FCommerce.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -9,37 +8,47 @@ namespace FCommerce.Website.Controllers
 {
     public class ProductsController : Controller
     {
-       private readonly IUnitOfWork _unitOfWork;
+        #region Dependanceis
+        private readonly IUnitOfWork _unitOfWork;
         private readonly INotyfService _notyfService;
+        #endregion
 
+        #region Product Custructor
         public ProductsController(IUnitOfWork unitOfWork, INotyfService notyfService)
         {
             _unitOfWork = unitOfWork;
             _notyfService = notyfService;
-
-
         }
+        #endregion
+
+        #region Product List 
         public IActionResult List()
         {
             var productInDb = _unitOfWork.ProductRepo.GetAllPro();
             return View(productInDb);
         }
+        #endregion
+
+        #region Product Upsert Get
         public IActionResult Upsert(int? id)
         {
             var categoryList = _unitOfWork.CategoryRepo.GetAll().ToList();
-           // var categorylistobj = _productRepo.GetCategories();
+            // var categorylistobj = _productRepo.GetCategories();
 
             ViewBag.CategoryItem = categoryList.Select(c => new SelectListItem { Text = c.Name, Value = c.Id.ToString() });
 
             if (id == null || id == 0)
             {
 
-                return View("UpsertForm",new Product());
+                return View("UpsertForm", new Product());
             }
             var editDataInDb = _unitOfWork.ProductRepo.Get(c => c.Id == id);
 
             return View("UpsertForm", editDataInDb);
         }
+        #endregion
+
+        #region Product Upsert Post
         [HttpPost]
         public IActionResult Upsert(Product product)
         {
@@ -61,13 +70,15 @@ namespace FCommerce.Website.Controllers
 
                 return RedirectToAction("List", "Products");
             }
-          
+
             return NotFound();
         }
+        #endregion
 
+        #region Product Delete Post/Get
         public IActionResult Delete(int id)
         {
-            if(id == 0)
+            if (id == 0)
             {
                 return NotFound();
             }
@@ -92,5 +103,6 @@ namespace FCommerce.Website.Controllers
         //    _productRepo.Save();
         //    return RedirectToAction("List", "Products");
         //}
+        #endregion
     }
 }
