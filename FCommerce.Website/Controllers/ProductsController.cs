@@ -27,7 +27,7 @@ namespace FCommerce.Website.Controllers
         #region Product List 
         public IActionResult List()
         {
-            var productInDb = _unitOfWork.ProductRepo.GetAllPro();
+            var productInDb = _unitOfWork.ProductRepo.GetAll("Category");
             return View(productInDb);
         }
         #endregion

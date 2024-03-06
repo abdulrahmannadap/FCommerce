@@ -18,7 +18,7 @@ namespace FCommerce.Models
         public string? ImageUrl { get; set; }
 
 
-        [ValidateNever]
+        
         [Required]
         public Category Category { get; set; }
         [ForeignKey("Category")]

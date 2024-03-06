@@ -41,15 +41,35 @@ namespace FCommerce.DataAcsess.Repos.Implimentations
             return _dbSet.Find(id);
         }
 
-        public T Get(System.Linq.Expressions.Expression<Func<T, bool>> filter)
+        public T Get(System.Linq.Expressions.Expression<Func<T, bool>> filter, string? includeProps = null)
         {
-            return _dbSet.SingleOrDefault(filter);
+            IQueryable<T> query = _dbSet;
+            if (string.IsNullOrEmpty(includeProps))
+            {
+                foreach (var includeProp in includeProps.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeProps);
+                }
+            }
+
+            return query.SingleOrDefault(filter);
         }
 
 
-        public IEnumerable<T> GetAll()
+        public IEnumerable<T> GetAll(string? includeProps = null)
         {
-            return _dbSet.ToList();
+            IQueryable<T> query = _dbSet;
+
+           
+            if(!string.IsNullOrEmpty(includeProps))
+            {
+                foreach (var includeProp in includeProps.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                {
+                   query = query.Include(includeProps);
+                }
+            }
+
+            return query.ToList();
         }
     }
 }
