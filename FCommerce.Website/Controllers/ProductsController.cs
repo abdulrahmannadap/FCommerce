@@ -84,7 +84,7 @@ namespace FCommerce.Website.Controllers
                     }
 
                     //Reletive path
-                    product.ImageUrl = @"\images\products" + newFileName;
+                    product.ImageUrl = @"\images\products\" + newFileName;
                 }
 
 

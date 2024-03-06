@@ -1,11 +1,11 @@
 ﻿@model Product
 
   <div class="m-2">
-    <a asp-action="List" asp-controller="Products" class="btn btn-primary text-uppercase "><i class="bi bi-list-ol"></i> Go To list</a>
+    <a asp-action="List" asp-controller="Products" class="btn btn-primary  text-uppercase "><i class="bi bi-list-ol"></i> Go To list</a>
   </div>
 
  
-<form asp-controller="Products" asp-action="Upsert" method="post" class="text-center" enctype="multipart/form-data">
+<form asp-controller="Products" asp-action="Upsert" method="post" class="form-group text-center " enctype="multipart/form-data">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
     
@@ -15,42 +15,40 @@
         <span asp-validation-for="ProductName" class="text text-danger" ></span>
     </div>
  
-    <div>
+  
     <label class="col-form-label">Product Description</label>
         <input type="text" asp-for="Description" placeholder="Enter Product name" class="form-control " >
         <span asp-validation-for="Description" class="text text-danger"></span>
 
-    </div>
-    <di>
+        <div class="row mt-2 ">
+            <div class="col-6">
+                <label class=" fw-bold">select File</label>
+            </div>
+            <div class="col-6">
+                <input type="file" class="form-control" name="file">
+            </div>
+        </div>
+    <div class="mt-2">
     <label class="col-form-label">Product Price</label>
         <input type="number" asp-for="ProductPrice" placeholder="Enter Product name" class="form-control">
         <span asp-validation-for="ProductPrice" class="text text-danger"></span>
     </div>
- 
-    <div class="row mt-2 ">
-         <div class="col-6">
-             <label class="form-label fw-bold">select File</label>
-         </div>
-          <div class="col-6">
-             <input type="file" class="form-control" name="file"> 
-         </div>
-    </div>
 
-
-
-    <div class="mt-2">
-        <select asp-for="CategoryId" asp-items="@ViewBag.CategoryItem" class="form-control">
+        <div class="mt-2">
+            <select asp-for="CategoryId" asp-items="@ViewBag.CategoryItem" class="form-select">
                 <option selected disabled> Select Category</option>
-        </select>
+            </select>
 
-    </div>
+        </div>
 
-    <div class="ms-lg-5 btn">
-        <input type="submit"  class="btn btn-success mt-3 text-uppercase mx-4 " value=@(Model.Id==0 ? "ADD" : "EDIT") />
-        <a asp-controller="Products" asp-action="List" class="btn btn-warning mt-3 text-uppercase">Cancelled</a>
-    </div>
 
+
+        <div class="mt-2">
+            <input type="submit" class="btn btn-success mt-3 text-uppercase mx-4 " value=@(Model.Id==0 ? "ADD" : "EDIT") />
+            <a asp-controller="Products" asp-action="List" class="btn btn-warning mt-3 text-uppercase">Cancelled</a>
+        </div>
 </form>
+
 
 
 
