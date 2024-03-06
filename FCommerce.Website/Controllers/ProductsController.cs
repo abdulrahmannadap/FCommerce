@@ -34,7 +34,7 @@ namespace FCommerce.Website.Controllers
             if (id == null || id == 0)
             {
 
-                return View("UpsertForm");
+                return View("UpsertForm",new Product());
             }
             var editDataInDb = _unitOfWork.ProductRepo.Get(c => c.Id == id);
 

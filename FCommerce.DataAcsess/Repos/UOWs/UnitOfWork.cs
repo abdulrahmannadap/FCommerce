@@ -1,4 +1,5 @@
-﻿using FCommerce.DataAcsess.Repos.Interfaces;
+﻿using FCommerce.DataAcsess.Repos.Implimentations;
+using FCommerce.DataAcsess.Repos.Interfaces;
 
 namespace FCommerce.DataAcsess.Repos.UOWs
 {
@@ -8,6 +9,8 @@ namespace FCommerce.DataAcsess.Repos.UOWs
         public UnitOfWork(ApplicationDbContext context)
         {
             _context = context;
+            CategoryRepo = new CategoryRepo(context);
+            ProductRepo = new ProductRepo(context);
         }
         public ICategoryRepo CategoryRepo { get; private set; }
 

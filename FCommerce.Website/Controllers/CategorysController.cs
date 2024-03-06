@@ -25,7 +25,7 @@ namespace FCommerce.Website.Controllers
         {
             if (id == null || id == 0)
             {
-                return View("UpsertForm");
+                return View("UpsertForm",new Category());
             }
             var editDataInDb = _unitOfWork.CategoryRepo.Get(c => c.Id == id);
 
