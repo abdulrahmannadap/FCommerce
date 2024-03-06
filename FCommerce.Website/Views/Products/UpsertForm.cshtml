@@ -36,7 +36,7 @@
     </div>
 
     <div class="ms-lg-5 btn">
-        <input type="submit"  class="btn btn-success mt-3 text-uppercase mx-4 " value="Submit" />
+        <input type="submit"  class="btn btn-success mt-3 text-uppercase mx-4 " value=@(Model.Id==0 ? "ADD" : "EDIT") />
         
         <a asp-controller="Products" asp-action="List" class="btn btn-warning mt-3 text-uppercase">Cancelled</a>
     </div>
