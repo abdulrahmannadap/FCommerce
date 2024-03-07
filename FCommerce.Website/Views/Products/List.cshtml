@@ -1,11 +1,6 @@
 ﻿@model IEnumerable<Product>
 
-<div >
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await Component.InvokeAsync("Notyf")
-</div>
+
 @* @if (TempData["Sucsess"] != null)
 {
     <div class="alert alert-success">
@@ -29,6 +24,7 @@
             <th>Product Description</th>
             <th>Product Price</th>
             <th>Product Category</th>
+            <th>Product Images</th>
             <th>Action</th>
         </tr>
     </thead>
@@ -41,6 +37,9 @@
                 <td>@product.Description</td>
                 <td>@product.ProductPrice</td>
                 <td>@product.Category.Name</td>
+                <td>
+                    <img src="@product.ImageUrl" alt="No Image Found" height="100" width="100" />     
+                </td>
                 <td>
                     <a asp-controller="Products" asp-action="Upsert" class="btn btn-warning text-uppercase" asp-route-id="@product.Id"><i class="bi bi-pencil-square"></i> Edit</a>
                     <a class="btn btn-danger text-uppercase" asp-controller="Categorys" asp-action="Delete" asp-route-id="@product.Id" onclick="return confirmDelete()"><i class="bi bi-x-octagon"></i> Delete</a>

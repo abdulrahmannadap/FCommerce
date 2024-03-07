@@ -27,7 +27,7 @@ namespace FCommerce.Website.Controllers
         #region Product List 
         public IActionResult List()
         {
-            var productInDb = _unitOfWork.ProductRepo.GetAllPro();
+            var productInDb = _unitOfWork.ProductRepo.GetAll("Category");
             return View(productInDb);
         }
         #endregion
@@ -53,7 +53,7 @@ namespace FCommerce.Website.Controllers
 
         #region Product Upsert Post
         [HttpPost]
-        public IActionResult Upsert(Product product,IFormFile file)
+        public IActionResult Upsert(Product product,IFormFile? file)
         {
 
             if (ModelState.IsValid)
@@ -63,6 +63,18 @@ namespace FCommerce.Website.Controllers
                     //string fileExtensionName = Path.GetExtension(file.FileName);
                     string newFileName = "Image"+Guid.NewGuid().ToString().Substring(0,5)+Path.GetExtension(file.FileName);
                     string webRootpath = _webHostEnvironment.WebRootPath;
+
+                    // Edit method Of File Update
+                    if(!string.IsNullOrEmpty(product.ImageUrl))
+                    {
+                        var oldImagePath = Path.Combine(webRootpath, product.ImageUrl.TrimStart('\\'));
+                        if(System.IO.File.Exists(oldImagePath))
+                        {
+                            System.IO.File.Delete(oldImagePath);    
+                        }
+                    }
+
+
                     //string finalDestination = webRootpath + @"\images\products";
                     string finalDestination = Path.Combine(webRootpath,@"images\products");
                    //Using Block Background Call Dispos Method
@@ -72,7 +84,7 @@ namespace FCommerce.Website.Controllers
                     }
 
                     //Reletive path
-                    product.ImageUrl = @"\images\products" + newFileName;
+                    product.ImageUrl = @"\images\products\" + newFileName;
                 }
 
 

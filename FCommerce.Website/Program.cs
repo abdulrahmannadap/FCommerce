@@ -4,6 +4,7 @@ using FCommerce.DataAcsess;
 using FCommerce.DataAcsess.Repos.Implimentations;
 using FCommerce.DataAcsess.Repos.Interfaces;
 using FCommerce.DataAcsess.Repos.UOWs;
+using FCommerce.Website;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,12 +12,14 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddDbContext<ApplicationDbContext>(option =>
-{
-    option.UseSqlServer(builder.Configuration.GetConnectionString("DbConnection"));
-});
-builder.Services.AddNotyf(config => { config.DurationInSeconds = 10; config.IsDismissable = true; config.Position = NotyfPosition.BottomRight; });
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+Configration.RegisterDependencies(builder.Services,builder.Configuration) ;
+
+//builder.Services.AddDbContext<ApplicationDbContext>(option =>
+//{
+//    option.UseSqlServer(builder.Configuration.GetConnectionString("DbConnection"));
+//});
+//builder.Services.AddNotyf(config => { config.DurationInSeconds = 10; config.IsDismissable = true; config.Position = NotyfPosition.BottomRight; });
+//builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 //builder.Services.AddScoped<ICategoryRepo, CategoryRepo>();
 //builder.Services.AddScoped<IProductRepo, ProductRepo>();
 var app = builder.Build();

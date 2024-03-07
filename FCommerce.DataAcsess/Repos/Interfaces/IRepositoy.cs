@@ -10,8 +10,9 @@ namespace FCommerce.DataAcsess.Repos.Interfaces
         void DeleteRange(IEnumerable<T> entities);
         T Get(int id);
        
-        T Get(Expression<Func<T, bool>> filter);
-        IEnumerable<T> GetAll();
+        T Get(Expression<Func<T, bool>> filter, string? includeProps = null);
+
+        IEnumerable<T> GetAll(string? includeProps=null);
 
     }
 }
