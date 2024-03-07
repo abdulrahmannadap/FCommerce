@@ -7,20 +7,28 @@ namespace FCommerce.Website.Controllers
 {
     public class CategorysController : Controller
     {
+        #region Dependanceis
         private readonly IUnitOfWork _unitOfWork;
         private readonly INotyfService _notyfService;
+        #endregion
+
+        #region Category Constructor
         public CategorysController(IUnitOfWork unitOfWork, INotyfService notyfService)
         {
             _unitOfWork = unitOfWork;
             _notyfService = notyfService;
         }
+        #endregion
+
+        #region Category List Method
         public IActionResult List()
         {
-
             var categoryInDb = _unitOfWork.CategoryRepo.GetAll();
             return View(categoryInDb);
         }
+        #endregion
 
+        #region Category Upsert Get Method
         public IActionResult Upsert(int? id)
         {
             if (id == null || id == 0)
@@ -31,6 +39,9 @@ namespace FCommerce.Website.Controllers
 
             return View("UpsertForm", editDataInDb);
         }
+        #endregion
+
+        #region Category Upsert post Method
         [HttpPost]
         public IActionResult Upsert(Category category)
         {
@@ -55,6 +66,9 @@ namespace FCommerce.Website.Controllers
             }
             return NotFound();
         }
+        #endregion
+
+        #region Category Delete Method
 
         public IActionResult Delete(int id)
         {
@@ -80,6 +94,7 @@ namespace FCommerce.Website.Controllers
         //    _categoryRepo.Save();
         //    return RedirectToAction("List","Categorys");
         //}
+        #endregion
 
     }
 }
