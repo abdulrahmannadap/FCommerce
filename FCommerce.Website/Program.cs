@@ -6,7 +6,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-Configration.RegisterDependencies(builder.Services, builder.Configuration);
+Configration.RegisterDependencies(builder);
+
+// Register Your Dependencies Old Wey
+//Configration.RegisterDependencies(builder.Services, builder.Configuration);
 
 //builder.Services.AddDbContext<ApplicationDbContext>(option =>
 //{
