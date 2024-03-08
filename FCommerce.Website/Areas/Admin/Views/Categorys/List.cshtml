@@ -21,13 +21,12 @@
 
 
 <div class="mb-3">
-    <a asp-controller="Categorys" asp-action="Upsert" class="btn btn-primary text-uppercase"><i class="bi bi-plus-lg"></i> Add More</a>
+    <a asp-area="Admin" asp-controller="Categorys" asp-action="Upsert" class="btn btn-primary text-uppercase"><i class="bi bi-plus-lg"></i> Add More</a>
 </div>
 
     <Table class="table table-hover table-bordered bg-warning ">
         <thead>
             <tr>
-                 <th class="text-uppercase">Id </th>
                  <th class="text-uppercase">Name</th>
                  <th class="text-uppercase">Actions</th>
             </tr>
@@ -36,10 +35,6 @@
             @foreach(var categoryInModel in Model)
             {
                 <tr>
-                <td>
-                    @categoryInModel.Id
-                </td>
-                    
                 <td>
                     @categoryInModel.Name
                 </td>

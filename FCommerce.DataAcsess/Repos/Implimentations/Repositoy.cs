@@ -46,9 +46,9 @@ namespace FCommerce.DataAcsess.Repos.Implimentations
             IQueryable<T> query = _dbSet;
             if (string.IsNullOrEmpty(includeProps))
             {
-                foreach (var includeProp in includeProps.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+                foreach (var includeProp in includeProps.Split(new char[] {','}, StringSplitOptions.RemoveEmptyEntries))
                 {
-                    query = query.Include(includeProps);
+                    query = query.Include(includeProp);
                 }
             }
 

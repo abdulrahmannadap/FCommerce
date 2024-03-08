@@ -4,15 +4,16 @@ using FCommerce.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
-namespace FCommerce.Website.Controllers
+namespace FCommerce.Website.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class ProductsController : Controller
     {
         #region Dependanceis
         private readonly IUnitOfWork _unitOfWork;
         private readonly INotyfService _notyfService;
         private readonly IWebHostEnvironment _webHostEnvironment;
-       
+
         #endregion
 
         #region Product Custructor
@@ -45,7 +46,9 @@ namespace FCommerce.Website.Controllers
 
                 return View("UpsertForm", new Product());
             }
-            var editDataInDb = _unitOfWork.ProductRepo.Get(c => c.Id == id);
+            var editDataInDb = _unitOfWork.ProductRepo.Get(c => c.Id == id,"Category");
+
+            //var editDataWithCategory = editDataInDb.CategoryId == id;
 
             return View("UpsertForm", editDataInDb);
         }
@@ -53,47 +56,42 @@ namespace FCommerce.Website.Controllers
 
         #region Product Upsert Post
         [HttpPost]
-        public IActionResult Upsert(Product product,IFormFile? file)
+        public IActionResult Upsert(Product product, IFormFile? file)
         {
 
             if (ModelState.IsValid)
             {
-                if(file != null)
+                if (file != null)
                 {
                     //string fileExtensionName = Path.GetExtension(file.FileName);
-                    string newFileName = "Image"+Guid.NewGuid().ToString().Substring(0,5)+Path.GetExtension(file.FileName);
+                    string newFileName = "Image" + Guid.NewGuid().ToString().Substring(0, 5) + Path.GetExtension(file.FileName);
                     string webRootpath = _webHostEnvironment.WebRootPath;
 
                     // Edit method Of File Update
-                    if(!string.IsNullOrEmpty(product.ImageUrl))
+                    if (!string.IsNullOrEmpty(product.ImageUrl))
                     {
                         var oldImagePath = Path.Combine(webRootpath, product.ImageUrl.TrimStart('\\'));
-                        if(System.IO.File.Exists(oldImagePath))
+                        if (System.IO.File.Exists(oldImagePath))
                         {
-                            System.IO.File.Delete(oldImagePath);    
+                            System.IO.File.Delete(oldImagePath);
                         }
                     }
 
 
                     //string finalDestination = webRootpath + @"\images\products";
-                    string finalDestination = Path.Combine(webRootpath,@"images\products");
-                   //Using Block Background Call Dispos Method
-                    using (FileStream fileStream = new FileStream(Path.Combine(finalDestination,newFileName),FileMode.Create))
+                    string finalDestination = Path.Combine(webRootpath , @"images\products");
+                    //Using Block Background Call Dispos Method
+                    using (FileStream fileStream = new FileStream(Path.Combine(finalDestination, newFileName), FileMode.Create))
                     {
                         file.CopyTo(fileStream);
                     }
 
                     //Reletive path
-                    product.ImageUrl = @"\images\products\" + newFileName;
+                    //product.ImageUrl = @"\images\products\" + newFileName;
+                    product.ImageUrl = Path.Combine(@"\images\products\", newFileName);
                 }
 
-
-
-
-
-
-
-                if (product.Id == null || product.Id == 0)
+                    if (product.Id == null || product.Id == 0)
                 {
                     _unitOfWork.ProductRepo.Add(product);
                     _unitOfWork.Save();
@@ -102,7 +100,7 @@ namespace FCommerce.Website.Controllers
                 else
                 {
                     _unitOfWork.ProductRepo.Edit(product);
-                    _unitOfWork.Save();
+                        _unitOfWork.Save();
                     _notyfService.Success("You have successfully Edit the data.");
 
                 }
@@ -128,7 +126,7 @@ namespace FCommerce.Website.Controllers
                 _unitOfWork.Save();
                 _notyfService.Error("Product To Bee Deleted...");
             }
-            return RedirectToAction("List");
+            return RedirectToAction("List", "Products");
         }
         //[HttpPost]
         //public IActionResult DeleteConferm(int id)
