@@ -20,6 +20,7 @@ namespace FCommerce.Models
 
         
         [Required]
+        [ValidateNever]
         public Category Category { get; set; }
         [ForeignKey("Category")]
         public int CategoryId { get; set; }

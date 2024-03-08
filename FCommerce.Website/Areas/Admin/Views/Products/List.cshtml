@@ -19,7 +19,6 @@
 <table class="table table-hover table-bordered bg-warning ">
     <thead>
         <tr>
-            <th>Id</th>
             <th>Product Name</th>
             <th>Product Description</th>
             <th>Product Price</th>
@@ -32,13 +31,12 @@
         @foreach(Product product in Model)
         {
             <tr>
-                <td>@product.Id</td>
                 <td>@product.ProductName</td>
                 <td>@product.Description</td>
                 <td>@product.ProductPrice</td>
                 <td>@product.Category.Name</td>
                 <td>
-                    <img src="@product.ImageUrl" alt="No Image Found" height="100" width="100" />     
+                    <img src="@product.ImageUrl" alt="No Image Found" height="150" width="150" />     
                 </td>
                 <td>
                     <a asp-controller="Products" asp-action="Upsert" class="btn btn-warning text-uppercase" asp-route-id="@product.Id"><i class="bi bi-pencil-square"></i> Edit</a>

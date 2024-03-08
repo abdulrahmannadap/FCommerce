@@ -1,18 +1,12 @@
-using AspNetCoreHero.ToastNotification;
 using AspNetCoreHero.ToastNotification.Extensions;
-using FCommerce.DataAcsess;
-using FCommerce.DataAcsess.Repos.Implimentations;
-using FCommerce.DataAcsess.Repos.Interfaces;
-using FCommerce.DataAcsess.Repos.UOWs;
 using FCommerce.Website;
-using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-Configration.RegisterDependencies(builder.Services,builder.Configuration) ;
+Configration.RegisterDependencies(builder.Services, builder.Configuration);
 
 //builder.Services.AddDbContext<ApplicationDbContext>(option =>
 //{
@@ -41,7 +35,11 @@ app.UseAuthorization();
 app.UseNotyf();
 
 app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    name: "customers",
+    pattern: "{area=Customer}/{controller=Home}/{action=Index}/{id?}");
+
+app.MapControllerRoute(
+    name: "admins",
+    pattern: "{area=Admin}/{controller=Products}/{action=List}/{id?}");
 
 app.Run();

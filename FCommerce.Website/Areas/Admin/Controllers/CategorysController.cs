@@ -3,8 +3,9 @@ using FCommerce.DataAcsess.Repos.UOWs;
 using FCommerce.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace FCommerce.Website.Controllers
+namespace FCommerce.Website.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class CategorysController : Controller
     {
         #region Dependanceis
@@ -33,9 +34,9 @@ namespace FCommerce.Website.Controllers
         {
             if (id == null || id == 0)
             {
-                return View("UpsertForm",new Category());
+                return View("UpsertForm", new Category());
             }
-            var editDataInDb = _unitOfWork.CategoryRepo.Get(c => c.Id == id);
+            var editDataInDb = _unitOfWork.CategoryRepo.Get(c => c.Id == id,"");
 
             return View("UpsertForm", editDataInDb);
         }
