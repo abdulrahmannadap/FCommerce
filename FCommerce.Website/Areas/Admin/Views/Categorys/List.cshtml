@@ -21,7 +21,7 @@
 
 
 <div class="mb-3">
-    <a asp-area="Admin" asp-controller="Categorys" asp-action="Upsert" class="btn btn-primary text-uppercase"><i class="bi bi-plus-lg"></i> Add More</a>
+    <a asp-area="Admin" asp-controller="Categorys" asp-action="Upsert" class="btn btn-outline-primary text-uppercase"><i class="bi bi-plus-lg"></i> Add More</a>
 </div>
 
     <Table class="table table-hover table-bordered bg-warning ">
@@ -39,8 +39,8 @@
                     @categoryInModel.Name
                 </td>
                 <td>
-                    <a class="btn btn-info text-uppercase" asp-controller="Categorys" asp-action="Upsert" asp-route-id="@categoryInModel.Id"><i class="bi bi-pencil-square"></i> Edit</a>
-                    <a class="btn btn-danger text-uppercase" asp-controller="Categorys" asp-action="Delete" asp-route-id="@categoryInModel.Id" onclick="return confirmDelete()" ><i class="bi bi-x-octagon"></i> Delete</a>
+                    <a class="btn btn-outline-warning text-uppercase" asp-controller="Categorys" asp-action="Upsert" asp-route-id="@categoryInModel.Id"><i class="bi bi-pencil-square"></i> Edit</a>
+                    <a class="btn btn-outline-danger text-uppercase" asp-controller="Categorys" asp-action="Delete" asp-route-id="@categoryInModel.Id" onclick="return confirmDelete()"><i class="bi bi-x-octagon"></i> Delete</a>
                 </td>
                 </tr>
                 

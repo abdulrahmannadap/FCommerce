@@ -91,7 +91,7 @@ namespace FCommerce.Website.Areas.Admin.Controllers
                     product.ImageUrl = Path.Combine(@"\images\products\", newFileName);
                 }
 
-                    if (product.Id == null || product.Id == 0)
+                    if (product.Id == 0  || product.Id == 0)
                 {
                     _unitOfWork.ProductRepo.Add(product);
                     _unitOfWork.Save();
