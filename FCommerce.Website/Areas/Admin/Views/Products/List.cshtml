@@ -13,7 +13,7 @@
 } *@
 
     <div class ="mb-3">
-    <a asp-controller="Products" asp-action="Upsert" class="btn btn-primary text-uppercase"><i class="bi bi-plus-lg"></i> Add More</a>
+    <a asp-controller="Products" asp-action="Upsert" class="btn btn-outline-primary text-uppercase"><i class="bi bi-plus-lg"></i> Add More</a>
     </div>
 
 <table class="table table-hover table-bordered bg-warning ">
@@ -39,8 +39,8 @@
                     <img src="@product.ImageUrl" alt="No Image Found" height="100" width="100" />     
                 </td>
                 <td>
-                    <a asp-controller="Products" asp-action="Upsert" class="btn btn-warning text-uppercase" asp-route-id="@product.Id"><i class="bi bi-pencil-square"></i> Edit</a>
-                    <a class="btn btn-danger text-uppercase" asp-controller="Categorys" asp-action="Delete" asp-route-id="@product.Id" onclick="return confirmDelete()"><i class="bi bi-x-octagon"></i> Delete</a>
+                    <a asp-controller="Products" asp-action="Upsert" class="btn btn-outline-warning text-uppercase" asp-route-id="@product.Id"><i class="bi bi-pencil-square"></i> Edit</a>
+                    <a class="btn btn-outline-danger text-uppercase" asp-controller="Categorys" asp-action="Delete" asp-route-id="@product.Id" onclick="return confirmDelete()"><i class="bi bi-x-octagon"></i> Delete</a>
                 </td>
             </tr>
             
