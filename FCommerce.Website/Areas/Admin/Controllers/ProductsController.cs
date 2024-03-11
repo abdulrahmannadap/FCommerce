@@ -42,7 +42,7 @@ namespace FCommerce.Website.Areas.Admin.Controllers
             ViewBag.CategoryItem = categoryList.Select(c => new SelectListItem { Text = c.Name, Value = c.Id.ToString() });
 
             if (id == null || id == 0)
-            {
+            {   
 
                 return View("UpsertForm", new Product());
             }
@@ -91,7 +91,7 @@ namespace FCommerce.Website.Areas.Admin.Controllers
                     product.ImageUrl = Path.Combine(@"\images\products\", newFileName);
                 }
 
-                    if (product.Id == 0  || product.Id == 0)
+                if (product.Id == 0  || product.Id == 0)
                 {
                     _unitOfWork.ProductRepo.Add(product);
                     _unitOfWork.Save();
@@ -112,7 +112,10 @@ namespace FCommerce.Website.Areas.Admin.Controllers
         }
         #endregion
 
-        #region Product Delete Post/Get
+
+
+
+        #region Product Delete Method 
         public IActionResult Delete(int id)
         {
             if (id == 0)
@@ -121,13 +124,42 @@ namespace FCommerce.Website.Areas.Admin.Controllers
             }
             else
             {
-                var deleteIdInDbs = _unitOfWork.ProductRepo.Get(id);
-                _unitOfWork.ProductRepo.DeleteNormal(deleteIdInDbs);
+                string webRootpath = _webHostEnvironment.WebRootPath;
+
+
+                var comingFormDeleteP = _unitOfWork.ProductRepo.Get(id);
+                _unitOfWork.ProductRepo.DeleteNormal(comingFormDeleteP);
+
+                if (!string.IsNullOrEmpty(comingFormDeleteP.ImageUrl))
+                {
+
+                    string oldImagePath = Path.Combine(webRootpath, comingFormDeleteP.ImageUrl.TrimStart('\\'));
+                    if (System.IO.File.Exists(oldImagePath))
+                    {
+                        System.IO.File.Delete(oldImagePath);
+                    }
+                }
                 _unitOfWork.Save();
                 _notyfService.Error("Product To Bee Deleted...");
             }
             return RedirectToAction("List", "Products");
         }
+        //#region Product Delete Post/Get
+        //public IActionResult Delete(int id)
+        //{
+        //    if (id == 0)
+        //    {
+        //        return NotFound();
+        //    }
+        //    else
+        //    {
+        //        var deleteIdInDbs = _unitOfWork.ProductRepo.Get(id);
+        //        _unitOfWork.ProductRepo.DeleteNormal(deleteIdInDbs);
+        //        _unitOfWork.Save();
+        //        _notyfService.Error("Product To Bee Deleted...");
+        //    }
+        //    return RedirectToAction("List", "Products");
+        //}
         //[HttpPost]
         //public IActionResult DeleteConferm(int id)
         //{
@@ -140,6 +172,9 @@ namespace FCommerce.Website.Areas.Admin.Controllers
         //    _productRepo.Save();
         //    return RedirectToAction("List", "Products");
         //}
+        //#endregion
+
         #endregion
+
     }
 }
